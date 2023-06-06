@@ -59,6 +59,7 @@ sysctl -w net.core.somaxconn=65535
 sysctl -w net.core.netdev_max_backlog=10000
 sysctl -w net.ipv4.tcp_max_syn_backlog=65535
 sysctl -w net.ipv4.tcp_max_tw_buckets=200000
+sysctl -w vm.max_map_count=262144
 sysctl -p
 
 # 写入vim的默认配置
