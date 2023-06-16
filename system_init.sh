@@ -55,11 +55,11 @@ setenforce 0
 
 # 高并发情况下内核参数优化
 ulimit -SHn 65535
-sysctl -w net.core.somaxconn=65535
-sysctl -w net.core.netdev_max_backlog=10000
-sysctl -w net.ipv4.tcp_max_syn_backlog=65535
-sysctl -w net.ipv4.tcp_max_tw_buckets=200000
-sysctl -w vm.max_map_count=262144
+echo "net.core.somaxconn=65535" >> /etc/sysctl.conf
+echo "net.core.netdev_max_backlog=10000" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_max_syn_backlog=65535" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_max_tw_buckets=200000" >> /etc/sysctl.conf
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -p
 
 # 写入vim的默认配置
