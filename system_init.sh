@@ -54,10 +54,12 @@ setenforce 0
 # sudo service ssh restart
 
 # 高并发情况下内核参数优化
-ulimit -SHn 65535
-echo "net.core.somaxconn=65535" >> /etc/sysctl.conf
+echo "* hard nofile 65536" >> /etc/security/limits.conf
+echo "* soft nofile 65536" >> /etc/security/limits.conf
+ulimit -SHn 65536
+echo "net.core.somaxconn=65536" >> /etc/sysctl.conf
 echo "net.core.netdev_max_backlog=10000" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_max_syn_backlog=65535" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_max_syn_backlog=65536" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_max_tw_buckets=200000" >> /etc/sysctl.conf
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -p
