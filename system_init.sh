@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-yum_change() {
+function yum_change {
     yum -y install wget
     mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
     mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup
@@ -13,7 +13,7 @@ yum_change() {
     yum makecache
 }
 
-zsh_install() {
+function zsh_install {
     # 安装zsh
     sudo yum install -y zsh git
 
