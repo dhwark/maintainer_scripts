@@ -55,19 +55,28 @@ setenforce 0
 
 # 高并发情况下内核参数优化
 # 设置当前用户最大打开文件描述符数，硬限制和软限制
-echo "* hard nofile 65536" >> /etc/security/limits.conf
-echo "* soft nofile 65536" >> /etc/security/limits.conf
+cat <<EOF >> /etc/security/limits.conf
+* hard nofile 65536
+* soft nofile 65536
+EOF
+
 ulimit -SHn 65536
-echo "net.core.somaxconn=65536" >> /etc/sysctl.conf
-echo "net.core.netdev_max_backlog=10000" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_max_syn_backlog=65536" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_max_tw_buckets=200000" >> /etc/sysctl.conf
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+
+cat <<EOF >> /etc/sysctl.conf
+net.core.somaxconn=65536
+net.core.netdev_max_backlog=10000
+net.ipv4.tcp_max_syn_backlog=65536
+net.ipv4.tcp_max_tw_buckets=200000
+net.ipv4.ip_forward = 1
+vm.max_map_count=262144
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
 sysctl -p
 
-# 减少swap使用
-echo "0" > /proc/sys/vm/swappiness
+# 关闭swap使用
+swapoff -a && echo "vm.swappiness = 0" >> /etc/sysctl.conf && sysctl -p
 
 # 写入vim的默认配置
 cat > /root/.vimrc << 'EOF'

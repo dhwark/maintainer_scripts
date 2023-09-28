@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 mkdir mysql_install
 cd mysql_install
 wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.32-1.el9.x86_64.rpm-bundle.tar
