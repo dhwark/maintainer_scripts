@@ -68,6 +68,7 @@ net.core.netdev_max_backlog=10000
 net.ipv4.tcp_max_syn_backlog=65536
 net.ipv4.tcp_max_tw_buckets=200000
 net.ipv4.ip_forward = 1
+vm.swappiness = 0
 vm.max_map_count=262144
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
@@ -76,7 +77,7 @@ EOF
 sysctl -p
 
 # 关闭swap使用
-swapoff -a && echo "vm.swappiness = 0" >> /etc/sysctl.conf && sysctl -p
+swapoff -a
 
 # 写入vim的默认配置
 cat > /root/.vimrc << 'EOF'
