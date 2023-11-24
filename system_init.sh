@@ -1,8 +1,9 @@
 #!/bin/bash
 
+set -e
 
 function yum_change {
-    yum -y install wget
+    yum -y install wget git
     mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
     mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup
     mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup
@@ -63,7 +64,6 @@ EOF
 ulimit -SHn 65536
 
 cat <<EOF >> /etc/sysctl.conf
-net.core.somaxconn=65536
 net.core.netdev_max_backlog=10000
 net.ipv4.tcp_max_syn_backlog=65536
 net.ipv4.tcp_max_tw_buckets=200000
@@ -78,6 +78,7 @@ sysctl -p
 
 # 关闭swap使用
 swapoff -a
+sed -i '/\/dev\/mapper\/centos-swap/s/^/# /' /etc/fstab
 
 # 写入vim的默认配置
 cat > /root/.vimrc << 'EOF'
