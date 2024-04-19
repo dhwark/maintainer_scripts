@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function docker_install {
     # step 1: 安装必要的一些系统工具
     yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -15,6 +17,7 @@ function docker_install {
 }
 
 function compose_install {
+    wget https://cors.isteed.cc/github.com/docker/compose/releases/download/v2.24.3/docker-compose-linux-x86_64
     mv ./docker-compose-linux-x86_64 /usr/local/bin/docker-compose
     chmod u+x /usr/local/bin/docker-compose
     docker-compose --version

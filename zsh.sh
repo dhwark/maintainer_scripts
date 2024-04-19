@@ -1,11 +1,21 @@
 #!/bin/bash
 
+# 要先复制.zshrc到家目录下
 set -e
 
 # 安装zsh
-sudo yum install -y zsh git
+os=$(grep "^ID=" /etc/os-release | cut -d= -f2)
+if [ "$os" == "ubuntu" ]; then
+    sudo apt install -y zsh git
+elif [ "$os" == "centos" ]; then
+    sudo yum install -y zsh git
+else
+    echo "不支持的操作系统"
+    exit 1
+fi
 
 # 切换为zsh
+# 如果其他用户要切换为zsh，还要复制.oh-my-zsh到家目录下
 chsh -s $(which zsh)
 
 # 安装oh-my-zsh
