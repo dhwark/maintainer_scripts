@@ -1,14 +1,11 @@
 #!/bin/bash
 
-
-IP_LIST=$1
-# 此处可以使用$@传递多个IP，但是就无法传入CMD了，可以在文件中定义IP列表
-CMD=$2
-for IP in ${IP_LIST};do
-    ssh -o StrictHostKeyChecking=no root@${IP} ${CMD}
-    if [ $? -eq 0 ];then
-        echo "ssh cmd ${IP} success"
-    else
-        echo "ssh cmd ${IP} failed"
-    fi  
-done
+USER_LIST=$@
+USER_FILE=./user.txt
+for USER in $USER_LIST;do
+    if ! id $USER  &>/dev/null; then
+        PASS=$(echo $RANDOM |md5sum |cut -c 1-8)
+        useradd $USER
+        passwd $PASS $USER
+        echo "$USER $PASS" >> $USER_FILE
+        echo "$USER 创建成功"
